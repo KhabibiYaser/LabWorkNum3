@@ -20,7 +20,6 @@ public class Main {
         FlowerCity flowerCity = new FlowerCity(Map.FlowerCity.getPlace());
         Pavilion pavilion  = new Pavilion(Map.Pavilion.getPlace());
         Room room  = new Room(Map.Room.getPlace());
-
         Magnet magnet = new Magnet(100,1,1,100,123);
         MoonRock moonRock = new MoonRock(1,1,1,100,123);
 

@@ -20,7 +20,7 @@ public class MoonRock extends Item{
             return false;
         }
         Item item = (Item) o;
-        return item.getId() == this.getId();
+        return item.getId() == this.getId() && item.hashCode() == this.hashCode();
     }
     @Override
     public int hashCode() {
