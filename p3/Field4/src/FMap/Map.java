@@ -4,7 +4,9 @@ public enum Map {
 
     FlowerCity("Цветочный город"),
     Pavilion("Павильон"),
-    Room("Кабина");
+    Room("Кабина"),
+
+    Rocket("Ракета");
     private String place;
 
     Map(String place){

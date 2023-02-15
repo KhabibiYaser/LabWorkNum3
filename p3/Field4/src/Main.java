@@ -1,5 +1,6 @@
-import Actor.Human;
-import Actor.StateOfMind;
+import Actor.*;
+import Exceptions.LowBatteryException;
+import Exceptions.WrongParameter;
 import Items.Case;
 import Items.Magnet;
 import Items.MoonRock;
@@ -10,78 +11,126 @@ import FMap.Pavilion;
 import FMap.Room;
 import FMap.World;
 import FMap.DayTime;
+import SpaceShip.Rocket;
+
+import java.util.LinkedList;
+import java.util.List;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws WrongParameter, LowBatteryException {
 
 
-        Case case_1 = new Case(10,10,10);
-        Human obj_1 = new Human("Знайка",18);
-        Human obj_2 = new Human("Грабитель",17);
-        FlowerCity flowerCity = new FlowerCity(Map.FlowerCity.getPlace());
-        Pavilion pavilion  = new Pavilion(Map.Pavilion.getPlace());
-        Room room  = new Room(Map.Room.getPlace());
-        Magnet magnet = new Magnet(100,1,1,100,123);
-        MoonRock moonRock = new MoonRock(1,1,1,100,123);
 
-        Remote remote = new Remote(23.2f,22.2f,11.1f,magnet,moonRock);
-
-        World world = new World("Мир", new Human[]{obj_1,obj_2}); // Помещаем наших персонажей в мир
-        System.out.println("Наши персонажи прибывают в Цветочный Город !");
+            Case case_1 = new Case(1,2,2);
+            Human obj_1 = new Human("Знайка",18);
+            Human obj_2 = new Human("Грабитель",17);
+            FlowerCity flowerCity = new FlowerCity(Map.FlowerCity.getPlace());
+            Pavilion pavilion  = new Pavilion(Map.Pavilion.getPlace());
+            Room room  = new Room(Map.Room.getPlace());
 
 
-        System.out.println("В цветочном городе сейчас проходит: " + flowerCity.getDayTime() );
-        world.movePeople(flowerCity,obj_1);
-        world.movePeople(flowerCity,obj_2); // Теперь как и в сказке наши персонажи в Цветочном городе
+            Magnet magnet = new Magnet(100,1,1,100,123);
+            MoonRock moonRock = new MoonRock(1,1,1,100,123);
 
-        System.out.println(obj_1.getName() + " решает сходить в павильон пока светло");
+            Remote remote = new Remote(23.2f,22.2f,11.1f,magnet,moonRock);
 
-        flowerCity.movePeople(pavilion,obj_1);
-        System.out.println("Сегодня " + obj_1.getName() + " " +  obj_1.getEmotion()  + " ничего в теории не сможет испортить ему настроение");
-
-        world.setDayTime(DayTime.NIGHT.getTime());
-        System.out.println("Во всем городе наступает " + flowerCity.getDayTime());
-
-        System.out.println(obj_2.getName() + " использует данную ситуацию , чтобы пробраться в Кабину");
-
-        flowerCity.movePeople(room,obj_2);
-
-        System.out.println("У Знайки наитие , что что-то не хорошо  , поэтому он решается отправиться в Кабину");
-
-        pavilion.movePeople(room,obj_1);
-
-        System.out.println("У ЗНАЙКИ ШОКККК");
-
-        obj_1.ChangeEmotion(obj_1,StateOfMind.ANGRY.getMind());
-
-        System.out.println("Знайка " + obj_1.getEmotion());
-
-        System.out.println("Пора Знайке предпринять меры , Знайка решается воспользоваться чудо пультом , чтобы отключить Гравитацию и сделать так чтобы Грабитель подлетел");
+            World world = new World("Мир", new Human[]{obj_1,obj_2}); // Помещаем наших персонажей в мир
 
 
-        System.out.println("Знайка: " + obj_1.getLevitation()   + "; Грабитель: " + obj_2.getLevitation());
 
-        remote.changeGravity(obj_1,obj_2,true);
-
-
-        System.out.println("Знайка: " + obj_1.getLevitation()   + "; Грабитель: " + obj_2.getLevitation());
-
-        remote.changeGravity(obj_1,obj_2,false);
-
-        System.out.println("Знайка: " + obj_1.getLevitation()   + "; Грабитель: " + obj_2.getLevitation());
+            Rocket rocket = new Rocket();
+            Rocket.Battery battery = new Rocket.Battery();
+            battery.setCharging(99);
+            rocket.startLaunch(battery);
 
 
-        System.out.println("Примем к сведению , что Знайка пожалел Грабителя и спустил его на землю");
 
-        obj_1.ChangeEmotion(obj_1,StateOfMind.HAPPY.getMind());
-
-        System.out.println("Знайка и Грабитель помирились");
-
-        System.out.println("Для безопасности Знайка помещает свой пульт в защищенный футляр");
-
-        case_1.WellConnected(remote);
+            Git git1 = new Git("Фуксия" , 17){
+                @Override
+                public void AnswerAir(Rocket o) {
+                    System.out.println("Спасибо за вопрос , Состояние Воздуха: " + o.getAirState() + "; Ответила: " + getName());
+                }
+            };
 
 
-        System.out.println("<<<<КОНЕЦ>>>>");
+
+
+
+            Git git2 = new Git("Селедка" , 18);
+            Neznaika neznaika = new Neznaika("Незнайка",21);
+
+
+            List<Git> gits= new LinkedList<>();
+            gits.add(git1);
+            gits.add(git2);
+
+            Crowd crowd = new Crowd(48);
+
+
+            rocket.addCrowd(true,gits,neznaika,crowd.objects());
+            rocket.startExcursion("Фуксия","Незнайка");
+
+
+
+
+            System.out.println("\n"+"Наши персонажи из лабы прибывают в Цветочный Город !");
+
+
+            System.out.println("В цветочном городе сейчас проходит: " + flowerCity.getDayTime() );
+            world.movePeople(flowerCity,obj_1);
+            world.movePeople(flowerCity,obj_2); // Теперь как и в сказке наши персонажи в Цветочном городе
+
+            System.out.println(obj_1.getName() + " решает сходить в павильон пока светло");
+
+            flowerCity.movePeople(pavilion,obj_1);
+            System.out.println("Сегодня " + obj_1.getName() + " " +  obj_1.getEmotion()  + " ничего в теории не сможет испортить ему настроение");
+
+            world.changeDayTime(DayTime.NIGHT.getTime());
+
+            System.out.println("Во всем городе наступает " + flowerCity.getDayTime());
+
+            System.out.println(obj_2.getName() + " использует данную ситуацию , чтобы пробраться в Кабину");
+
+            flowerCity.movePeople(room,obj_2);
+
+            System.out.println("У Знайки наитие , что что-то не хорошо  , поэтому он решается отправиться в Кабину");
+
+            pavilion.movePeople(room,obj_1);
+
+            System.out.println("У ЗНАЙКИ ШОКККК");
+
+            obj_1.ChangeEmotion(obj_1,StateOfMind.ANGRY.getMind());
+
+            System.out.println("Знайка " + obj_1.getEmotion());
+
+            System.out.println("Пора Знайке предпринять меры , Знайка решается воспользоваться чудо пультом , чтобы отключить Гравитацию и сделать так чтобы Грабитель подлетел");
+
+
+            System.out.println("Знайка: " + obj_1.getLevitation()   + "; Грабитель: " + obj_2.getLevitation());
+
+            remote.changeGravity(obj_1,obj_2,true);
+
+
+            System.out.println("Знайка: " + obj_1.getLevitation()   + "; Грабитель: " + obj_2.getLevitation());
+
+            remote.changeGravity(obj_1,obj_2,false);
+
+            System.out.println("Знайка: " + obj_1.getLevitation()   + "; Грабитель: " + obj_2.getLevitation());
+
+
+            System.out.println("Примем к сведению , что Знайка пожалел Грабителя и спустил его на землю");
+
+            obj_1.ChangeEmotion(obj_1,StateOfMind.HAPPY.getMind());
+
+            System.out.println("Знайка и Грабитель помирились");
+
+            System.out.println("Для безопасности Знайка помещает свой пульт в защищенный футляр");
+
+            case_1.WellConnected(remote);
+
+
+            System.out.println("<<<<КОНЕЦ>>>>");
+
 
 
 

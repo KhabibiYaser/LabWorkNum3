@@ -1,5 +1,8 @@
 package Actor;
 
+import Exceptions.WrongParameter;
+import FMap.Map;
+
 // поле текущей локацции
 //
 public class Human implements Abilities{
@@ -9,16 +12,29 @@ public class Human implements Abilities{
     private String name;
     private int age;
 
-    private String Current_Location;
+    private String Current_Location = Map.FlowerCity.getPlace();
 
 
     private String emotion = StateOfMind.HAPPY.getMind();
 
 
+    public Human(String name){
+        this.name = name;
+    }
     public Human(String name,int age){
         this.name = name;
         this.age = age;
     }
+    public Human(String name,int age,String current_Location){
+        this.Current_Location = current_Location;
+        this.name = name;
+        this.age = age;
+    }
+
+    public Human(){
+    }
+
+
 
 
 
@@ -27,7 +43,7 @@ public class Human implements Abilities{
         return emotion;
     }
 
-    public void setCurrent_Location(String current_Location) {
+    public void setCurrent_Location(String current_Location) throws WrongParameter {
         Current_Location = current_Location;
     }
 

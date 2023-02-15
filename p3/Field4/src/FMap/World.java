@@ -1,6 +1,7 @@
 package FMap;
 
 import Actor.Human;
+import Exceptions.WrongParameter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class World {
 
     private LinkedList<Human> people = new LinkedList<Human>();
 
-    public World(String name , Human[] p){
+    public World(String name , Human[] p) throws WrongParameter {
         this.name = name;
         people.addAll(List.of(p));
         for (Human human : p) {
@@ -32,7 +33,7 @@ public class World {
     // ...
 
 
-    public void movePeople(World toPlace, Human human ){
+    public void movePeople(World toPlace, Human human ) throws WrongParameter{
         if (!this.people.contains(human)){
             System.out.println("человека нет в команте , кого вы пытаетесь перместить ?/ ");
         }else if (toPlace.people.contains(human)){
@@ -45,10 +46,10 @@ public class World {
             human.setCurrent_Location(toPlace.name);
 
         }else {
-        this.delPeople(human);
-        toPlace.addPeople(human);
-        System.out.println("Вы отправили персонажа : " + human.getName() +" --> В локацию: " + toPlace.getName() );
-        human.setCurrent_Location(toPlace.name);
+            this.delPeople(human);
+            toPlace.addPeople(human);
+            System.out.println("Вы отправили персонажа : " + human.getName() +" --> В локацию: " + toPlace.getName() );
+            human.setCurrent_Location(toPlace.name);
 
         }
 
@@ -90,7 +91,7 @@ public class World {
         this.name = name;
     }
 
-    public void setDayTime(String dayTime) {
+    public void changeDayTime(String dayTime) {
         this.dayTime = dayTime;
     }
 
